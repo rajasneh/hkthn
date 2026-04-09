@@ -8,6 +8,7 @@ import {
   UserButton,
 } from '@clerk/clerk-react'
 import { NavLink, Route, Routes } from 'react-router-dom'
+import { useSampleTodo } from './hooks/useSampleTodo'
 import './App.css'
 
 function App() {
@@ -106,10 +107,19 @@ function AuthSignUpPage() {
 }
 
 function HomePage() {
+  const { data, isLoading, isError } = useSampleTodo()
+
   return (
     <section>
       <h2>Pick an idea and ship fast</h2>
       <p>Use this page as your dashboard, task board, or landing page.</p>
+      {isLoading && <p>Loading sample API data...</p>}
+      {isError && <p>Could not load sample data.</p>}
+      {data && (
+        <p>
+          Example query result: <strong>{data.title}</strong>
+        </p>
+      )}
     </section>
   )
 }
